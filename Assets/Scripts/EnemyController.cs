@@ -6,17 +6,17 @@ public class EnemyController : MonoBehaviour
 {
     public float speed = 5.0f;
     private float moveTime = 2.5f;
+    private bool moveRight = true;
 
-    // Start is called before the first frame update
-    void Start()
+    public void Start()
     {
-
+        StartCoroutine(Timer());
     }
 
-    // FixedUpdate is called once per fixed framerate frame (Mainly used for physical aspects)
-    void FixedUpdate()
+    public void FixedUpdate()
     {
         transform.position += Vector3.right * speed * Time.deltaTime;
+        StartCoroutine(Timer());
     }
 
     public IEnumerator Timer()
@@ -24,6 +24,5 @@ public class EnemyController : MonoBehaviour
         Debug.Log("Coroutine Started");
         yield return new WaitForSeconds(moveTime);
         speed *= -1;
-        StartCoroutine(Timer());
     }
 }

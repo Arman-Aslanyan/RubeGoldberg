@@ -18,6 +18,14 @@ public class PlayerConroller : MonoBehaviour
     public static bool hasStart;
     private Rigidbody2D rb;
 
+    public float speed = 5.0f;
+
+    /*public float jumpPower = 500.0f;
+    private float jumpCooldown = 1.5f;
+    private bool canJump;*/
+
+    [Tooltip("Enables the player to move on the horizontal axis")]
+    public bool enableControls = false;
 
     void Start()
     {
@@ -58,7 +66,54 @@ public class PlayerConroller : MonoBehaviour
             rb.bodyType = RigidbodyType2D.Dynamic;
             hasStart = true;
         }
+
+        /*if (Input.GetKeyDown(KeyCode.Space) && enableControls)
+        {
+            Jump();
+            StartCoroutine(JumpTimer());
+        }*/
     }
+
+    void FixedUpdate()
+    {
+        if (enableControls)
+        {
+            float horizontalInput = Input.GetAxis("Horizontal");
+
+            transform.Translate(Vector3.right * horizontalInput * speed * Time.deltaTime);
+        }
+    }
+
+    public void OnTriggerEnter2D(Collider2D other)
+    {
+        enableControls = true;
+        //canJump = true;
+        gameObject.transform.localEulerAngles = new Vector3(0, 0, 0);
+        rb.constraints = RigidbodyConstraints2D.FreezeRotation;
+    }
+
+    public void OnCollisionEnter2D(Collision2D other)
+    {
+        if (other.gameObject.CompareTag("NewTarget"))
+        {
+            FollowPlayer.target = other.gameObject.GetComponent<Transform>();
+        }
+    }
+
+    /*public void Jump()
+    {
+        if (canJump)
+        {
+            rb.AddForce(Vector2.up * jumpPower);
+            canJump = false;
+        }
+    }
+
+    public IEnumerator JumpTimer()
+    {
+        yield return new WaitForSeconds(jumpCooldown);
+        canJump = true;
+    }*/
 
     public void ChangePosition(bool canChangePos)
     {

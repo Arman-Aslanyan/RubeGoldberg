@@ -4,13 +4,13 @@ using UnityEngine;
 
 public class FollowPlayer : MonoBehaviour
 {
-    private Transform Player;
+    public static Transform target;
     private Vector3 offset = new Vector3(0, 0, -10);
 
     // Start is called before the first frame update
     void Start()
     {
-        Player = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
+        target = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
     }
 
     // Update is called once per frame
@@ -18,7 +18,7 @@ public class FollowPlayer : MonoBehaviour
     {
         if (PlayerConroller.hasStart)
         {
-            transform.position = Player.position + offset;
+            transform.position = target.position + offset;
         }
     }
 }

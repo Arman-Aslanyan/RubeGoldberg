@@ -25,7 +25,7 @@ public class PlayerConroller : MonoBehaviour
     private bool canJump;*/
 
     [Tooltip("Enables the player to move on the horizontal axis")]
-    public bool enableControls = false;
+    public static bool enableControls = false;
 
     void Start()
     {

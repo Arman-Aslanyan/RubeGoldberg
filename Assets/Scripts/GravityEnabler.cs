@@ -9,7 +9,7 @@ public class GravityEnabler : MonoBehaviour
         string tag = other.gameObject.tag;
         Rigidbody2D rb = other.gameObject.GetComponent<Rigidbody2D>();
 
-        rb.gravityScale = 1.0f;
+        rb.gravityScale = 3.0f;
         rb.constraints = RigidbodyConstraints2D.FreezeRotation;
 
         FollowPlayer.target = other.gameObject.GetComponent<Transform>();

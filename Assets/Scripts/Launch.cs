@@ -4,18 +4,16 @@ using UnityEngine;
 
 public class Launch : MonoBehaviour
 {
-    public float rotateSpeed = 500.0f;
-    private bool rotate;
+    public float launchPower = 50.0f;
+    private bool launch;
 
-    private Rigidbody2D launchRb;
     private Transform launcher;
-    private BoxCollider2D launcherBox;
+    private Rigidbody2D playerRb;
 
     public void Start()
     {
-        launchRb = GameObject.FindGameObjectWithTag("Launcher").GetComponent<Rigidbody2D>();
         launcher = GameObject.FindGameObjectWithTag("Launcher").GetComponent<Transform>();
-        launcherBox = GameObject.FindGameObjectWithTag("Launcher").GetComponent<BoxCollider2D>();
+        playerRb = GameObject.FindGameObjectWithTag("Player").GetComponent<Rigidbody2D>();
     }
 
     public void OnCollisionEnter2D(Collision2D other)
@@ -29,19 +27,19 @@ public class Launch : MonoBehaviour
     public IEnumerator Timer()
     {
         yield return new WaitForSeconds(0.25f);
-        rotate = true;
-        yield return new WaitForSeconds(0.5f);
-        launcherBox.enabled = false;
-        yield return new WaitForSeconds(2);
-        rotate = false;
+        launch = true;
+        yield return new WaitForSeconds(1);
+        playerRb.constraints = RigidbodyConstraints2D.None;
+        launch = false;
+        yield return new WaitForSeconds(0.75f);
+        FollowPlayer.target = playerRb.gameObject.GetComponent<Transform>();
     }
 
     public void Update()
     {
-        if (rotate)
+        if (launch)
         {
-            //launchRb.AddForce(new Vector3(0, 0, 1) * rotateSpeed * Time.deltaTime);
-            launcher.transform.Rotate(new Vector3(0, 0, -1) * -rotateSpeed * Time.deltaTime);
+            launcher.Rotate(new Vector3(0, 0, -1) * -launchPower * Time.deltaTime);
         }
     }
 }

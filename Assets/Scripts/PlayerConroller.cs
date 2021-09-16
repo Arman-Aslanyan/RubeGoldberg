@@ -14,6 +14,7 @@ public class PlayerConroller : MonoBehaviour
     private Vector2 pos7 = new Vector2(5.67f, 4.32f);*/
 
     public Vector2[] Positions;
+    public GameObject txt;
 
     public int posNum;
     public static bool hasStart;
@@ -30,6 +31,8 @@ public class PlayerConroller : MonoBehaviour
 
     void Start()
     {
+        txt.active = false;
+
         rb = gameObject.GetComponent<Rigidbody2D>();
         rb.bodyType = RigidbodyType2D.Static;
 
@@ -67,12 +70,6 @@ public class PlayerConroller : MonoBehaviour
             rb.bodyType = RigidbodyType2D.Dynamic;
             hasStart = true;
         }
-
-        /*if (Input.GetKeyDown(KeyCode.Space) && enableControls)
-        {
-            Jump();
-            StartCoroutine(JumpTimer());
-        }*/
     }
 
     void FixedUpdate()
@@ -88,9 +85,13 @@ public class PlayerConroller : MonoBehaviour
     public void OnTriggerEnter2D(Collider2D other)
     {
         enableControls = true;
-        //canJump = true;
         gameObject.transform.localEulerAngles = new Vector3(0, 0, 0);
         rb.constraints = RigidbodyConstraints2D.FreezeRotation;
+
+        if (other.CompareTag("VictoryCheck"))
+        {
+            StartCoroutine(timer());
+        }
     }
 
     public void OnCollisionEnter2D(Collision2D other)
@@ -101,20 +102,11 @@ public class PlayerConroller : MonoBehaviour
         }
     }
 
-    /*public void Jump()
+    public IEnumerator timer()
     {
-        if (canJump)
-        {
-            rb.AddForce(Vector2.up * jumpPower);
-            canJump = false;
-        }
+        yield return new WaitForSeconds(1);
+        txt.active = true;
     }
-
-    public IEnumerator JumpTimer()
-    {
-        yield return new WaitForSeconds(jumpCooldown);
-        canJump = true;
-    }*/
 
     public void ChangePosition(bool canChangePos)
     {

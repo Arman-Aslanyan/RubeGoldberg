@@ -7,8 +7,10 @@ public class PlayerConroller : MonoBehaviour
 {
     //Set an array for possible starting positions
     public Vector2[] Positions;
-    //The tet that will signify the player's victory
+    //The tet that will signify the player's victory and/or help guide the player
     public GameObject txt;
+    public GameObject helperTxt;
+    public GameObject helperTxt2;
 
     //An Int to keep track of player's current position number
     public int posNum;
@@ -26,11 +28,15 @@ public class PlayerConroller : MonoBehaviour
     //Adds to Positions Array and sets values to certain variables;
     void Start()
     {
-        txt.active = false;
+        //Set all text to not be active in-game
+        txt.SetActive(false);
+        helperTxt.SetActive(false);
 
+        //Stores player's rigidbody component and sets the player body type to static
         rb = gameObject.GetComponent<Rigidbody2D>();
         rb.bodyType = RigidbodyType2D.Static;
 
+        //Creating and storing 7 elements in the Positions Array
         Positions = new Vector2[7];
         Positions[0] = new Vector2(-5.84f, 4.32f);
         Positions[1] = new Vector2(-3.92f, 4.32f);
@@ -40,6 +46,7 @@ public class PlayerConroller : MonoBehaviour
         Positions[5] = new Vector2(3.8f, 4.32f);
         Positions[6] = new Vector2(5.67f, 4.32f);
 
+        //Spawn the player in the middle slot
         posNum = 4;
         ChangePosition(true);
     }
@@ -50,6 +57,7 @@ public class PlayerConroller : MonoBehaviour
         //Will change Player's chosen slot
         if (Input.GetKeyDown(KeyCode.E))
         {
+            //If the player is at the right-most slot and clicks "E", then move them to the left-most slot
             if (posNum == 7)
             {
                 posNum = 1;
@@ -66,6 +74,7 @@ public class PlayerConroller : MonoBehaviour
         {
             rb.bodyType = RigidbodyType2D.Dynamic;
             hasStart = true;
+            helperTxt2.SetActive(false);
         }
     }
 
@@ -84,12 +93,19 @@ public class PlayerConroller : MonoBehaviour
     public void OnTriggerEnter2D(Collider2D other)
     {
         enableControls = true;
+        //Sets Player's rotation to zero to reduce movement issues
         gameObject.transform.localEulerAngles = new Vector3(0, 0, 0);
+        //Freezes Player's rotation to reduce movement issues
         rb.constraints = RigidbodyConstraints2D.FreezeRotation;
+
+        if (other.name == "ControlEnabler")
+        {
+            StartCoroutine(timer(true));
+        }
 
         if (other.CompareTag("VictoryCheck"))
         {
-            StartCoroutine(timer());
+            StartCoroutine(timer(false));
         }
     }
 
@@ -103,10 +119,20 @@ public class PlayerConroller : MonoBehaviour
     }
 
     //When called will wait one second to enable to "Victory!!" text
-    public IEnumerator timer()
+    public IEnumerator timer(bool helper)
     {
         yield return new WaitForSeconds(1);
-        txt.active = true;
+        if (helper)
+        {
+            helperTxt.SetActive(true);
+            yield return new WaitForSeconds(5);
+            helperTxt.SetActive(false);
+        }
+
+        if (!helper)
+        {
+            txt.SetActive(true);
+        }
     }
 
     //Changes the player's chosen slot

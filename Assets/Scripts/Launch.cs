@@ -32,6 +32,7 @@ public class Launch : MonoBehaviour
         yield return new WaitForSeconds(0.25f);
         launch = true;
         yield return new WaitForSeconds(1);
+        //Removes constraints on the player
         playerRb.constraints = RigidbodyConstraints2D.None;
         launch = false;
         yield return new WaitForSeconds(0.75f);

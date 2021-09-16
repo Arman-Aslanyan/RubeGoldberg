@@ -4,7 +4,9 @@ using UnityEngine;
 
 public class FollowPlayer : MonoBehaviour
 {
+    //Object the Camera will follow
     public static Transform target;
+    //Offset to make the camera view as desired
     private Vector3 offset = new Vector3(0, 0, -10);
 
     // Start is called before the first frame update
@@ -16,6 +18,7 @@ public class FollowPlayer : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //Checks if the Player has started the game and will then follow the Player
         if (PlayerConroller.hasStart)
         {
             transform.position = target.position + offset;

@@ -5,30 +5,25 @@ using UnityEngine.UI;
 
 public class PlayerConroller : MonoBehaviour
 {
-/*    private Vector2 pos1 = new Vector2(-5.84f, 4.32f);
-    private Vector2 pos2 = new Vector2(-3.92f, 4.32f);
-    private Vector2 pos3 = new Vector2(-2.02f, 4.32f);
-    private Vector2 pos4 = new Vector2(0, 4.32f);
-    private Vector2 pos5 = new Vector2(1.95f, 4.32f);
-    private Vector2 pos6 = new Vector2(3.8f, 4.32f);
-    private Vector2 pos7 = new Vector2(5.67f, 4.32f);*/
-
+    //Set an array for possible starting positions
     public Vector2[] Positions;
+    //The tet that will signify the player's victory
     public GameObject txt;
 
+    //An Int to keep track of player's current position number
     public int posNum;
+    //Has the game begun?
     public static bool hasStart;
+    //Player's RigidBody
     private Rigidbody2D rb;
 
+    //Player's movement speed
     public float speed = 5.0f;
-
-    /*public float jumpPower = 500.0f;
-    private float jumpCooldown = 1.5f;
-    private bool canJump;*/
 
     [Tooltip("Enables the player to move on the horizontal axis")]
     public static bool enableControls = false;
 
+    //Adds to Positions Array and sets values to certain variables;
     void Start()
     {
         txt.active = false;
@@ -52,6 +47,7 @@ public class PlayerConroller : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //Will change Player's chosen slot
         if (Input.GetKeyDown(KeyCode.E))
         {
             if (posNum == 7)
@@ -65,6 +61,7 @@ public class PlayerConroller : MonoBehaviour
             ChangePosition(true);
         }
 
+        //Will start the game with Player at chosen slot
         if (Input.GetKeyDown(KeyCode.R))
         {
             rb.bodyType = RigidbodyType2D.Dynamic;
@@ -72,6 +69,7 @@ public class PlayerConroller : MonoBehaviour
         }
     }
 
+    //Used for player movement
     void FixedUpdate()
     {
         if (enableControls)
@@ -82,6 +80,7 @@ public class PlayerConroller : MonoBehaviour
         }
     }
 
+    //Upon entering a trigger enable PlayerControls and if other's tag is "VictoryCheck" then Start the timer() Coroutine
     public void OnTriggerEnter2D(Collider2D other)
     {
         enableControls = true;
@@ -94,6 +93,7 @@ public class PlayerConroller : MonoBehaviour
         }
     }
 
+    //Upon entering a collider check if the objects tag is "NewTarget" then change camera's target
     public void OnCollisionEnter2D(Collision2D other)
     {
         if (other.gameObject.CompareTag("NewTarget"))
@@ -102,12 +102,14 @@ public class PlayerConroller : MonoBehaviour
         }
     }
 
+    //When called will wait one second to enable to "Victory!!" text
     public IEnumerator timer()
     {
         yield return new WaitForSeconds(1);
         txt.active = true;
     }
 
+    //Changes the player's chosen slot
     public void ChangePosition(bool canChangePos)
     {
         if (canChangePos)

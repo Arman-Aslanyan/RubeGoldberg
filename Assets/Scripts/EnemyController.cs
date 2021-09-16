@@ -4,11 +4,12 @@ using UnityEngine;
 
 public class EnemyController : MonoBehaviour
 {
+    //Enemy speed
     public float speed;
+    //Time the enemy will move with certain speed
     private float moveTime = 0.5f;
-    /*[Tooltip("A random int speed value of the enemy to make each obstacle have a unique speed")]
-    public int randSpeed; */
 
+    //Used to get enemy's first random speed
     public void Start()
     {
         speed = Random.Range(-1, 1);
@@ -16,18 +17,18 @@ public class EnemyController : MonoBehaviour
         StartCoroutine(Timer());
     }
 
+    //Moves the enemy
     public void FixedUpdate()
     {
         transform.position += Vector3.right * speed * Time.deltaTime;
     }
 
+    /*Control center of the enemies: after a certain time, the enemies speed is randomized.
+      And if the enemy is too far to the left or the right it will forcibly alter their speed to return them near the middle*/
     public IEnumerator Timer()
     {
         yield return new WaitForSeconds(moveTime);
-        //randSpeed = Random.Range(1, 5);
         speed = Random.Range(-7.0f, 7.0f);
-        //speed *= randSpeed;
-        //speed *= -1;
         if (transform.position.x > 10.0f)
         {
             speed = -9;

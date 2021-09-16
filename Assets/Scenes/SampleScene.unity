@@ -1237,7 +1237,6 @@ GameObject:
   m_Component:
   - component: {fileID: 371516374}
   - component: {fileID: 371516373}
-  - component: {fileID: 371516375}
   m_Layer: 0
   m_Name: VictoryCheck
   m_TagString: VictoryCheck
@@ -1285,18 +1284,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 22
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &371516375
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 371516372}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: daefd1e1c3764ad49a419ad249ebac4b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &382587274
 GameObject:
   m_ObjectHideFlags: 0
@@ -5912,7 +5899,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1580350639}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
   m_Name: 
@@ -7863,6 +7850,10 @@ PrefabInstance:
       propertyPath: m_Constraints
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6719494141451472019, guid: e05b034ff2304fd43baef27ee4efd7b0, type: 3}
+      propertyPath: txt
+      value: 
+      objectReference: {fileID: 1580350639}
     - target: {fileID: 6719494141451472028, guid: e05b034ff2304fd43baef27ee4efd7b0, type: 3}
       propertyPath: m_Name
       value: Player

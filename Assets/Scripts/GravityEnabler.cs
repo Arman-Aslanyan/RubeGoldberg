@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class GravityEnabler : MonoBehaviour
 {
+    //Upon collision will change objects gravity and RigidBody type as well as Camera's target
     public void OnCollisionEnter2D(Collision2D other)
     {
-        string tag = other.gameObject.tag;
         Rigidbody2D rb = other.gameObject.GetComponent<Rigidbody2D>();
 
         rb.gravityScale = 3.0f;

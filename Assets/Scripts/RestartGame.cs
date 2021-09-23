@@ -15,5 +15,6 @@ public class RestartGame : MonoBehaviour
     public void Restart()
     {
         SceneManager.LoadScene(0);
+        PlayerConroller.hasStart = false;
     }
 }
